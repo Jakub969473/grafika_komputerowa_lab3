@@ -52,6 +52,8 @@ public class MojeOkno extends JFrame implements ActionListener {
                 }
 
                 punkty.points=p;
+
+                punkty.dodaj();
             }
         };
 
@@ -74,7 +76,31 @@ public class MojeOkno extends JFrame implements ActionListener {
             panel.linia = 2;
             panel.repaint();
         }else if(label.equals("Reset")){
-            panel.reset();
+            //panel.reset();
+
+            double[][] x =new double[3][3];
+
+            for(int i=0;i<3;i++){
+                for(int j=0;j<3;j++){
+                    x[i][j]=0;
+                }
+            }
+
+            x[0][0]=1;
+            x[1][1]=1;
+            x[2][2]=1;
+            x[2][0]=50;
+            x[2][1]=50;
+
+            for(int i=0;i<3;i++){
+                for(int j=0;j<3;j++){
+                    System.out.print(x[i][j]+" ");
+                }
+                System.out.println();
+            }
+
+            panel.Mul(x);
+            panel.przeksztalc();
         }
 
     }

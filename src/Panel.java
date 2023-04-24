@@ -6,7 +6,10 @@ import java.awt.event.MouseEvent;
 public class Panel extends JPanel {
 
     public ArrayList points = new ArrayList();
+
+    private ArrayList punktyPoPrzekształceniu = points;
     int linia = 0;
+    double aktualnaMacierz[][] = new double[3][3];
 
     public Panel(){
 
@@ -22,6 +25,16 @@ public class Panel extends JPanel {
             }
         });
 
+        for(int j=0;j<3;j++){
+            for(int k=0;k<3;k++) {
+                aktualnaMacierz[k][j] = 0;
+            }
+        }
+
+        aktualnaMacierz[0][0] = 1;
+        aktualnaMacierz[1][1] = 1;
+        aktualnaMacierz[2][2] = 1;
+
     }
 
     @Override
@@ -31,7 +44,8 @@ public class Panel extends JPanel {
         Graphics g2 = (Graphics2D) g;
         g2.setColor(Color.gray);
         for (int i=0;i<points.size;i++){
-            Point p=points.get(i);
+            Point p=punktyPoPrzekształceniu.get(i);
+
             g2.fillOval(p.x, p.y, 5, 5);
 
             if(linia !=0) {
@@ -39,15 +53,15 @@ public class Panel extends JPanel {
             }
         }
 
-        if(linia == 2 && points.size>0) {
+        if(linia == 2 && punktyPoPrzekształceniu.size>0) {
             Bezir(g2);
         }
     }
 
     public void Lamana(int i, Point p,Graphics g ){
 
-        if(i<points.size && points.size>1){
-            Point prev = points.get(i-1);
+        if(i<punktyPoPrzekształceniu.size && punktyPoPrzekształceniu.size>1){
+            Point prev = punktyPoPrzekształceniu.get(i-1);
             g.drawLine(p.x+2,p.y+2,prev.x+2,prev.y+2);
         }
 
@@ -66,8 +80,8 @@ public class Panel extends JPanel {
 
         for(int j=0;j<dok;j++) {
             for (int i = 0; i < points.size; i++) {
-                R[i][0] = points.get(i).x;
-                R[i][1] = points.get(i).y;
+                R[i][0] = punktyPoPrzekształceniu.get(i).x;
+                R[i][1] = punktyPoPrzekształceniu.get(i).y;
 
             }
 
@@ -89,7 +103,7 @@ public class Panel extends JPanel {
             t+=1.0/dok;
         }
 
-        Point p =points.get(0);
+        Point p =punktyPoPrzekształceniu.get(0);
 
         g.drawLine(p.x+2,p.y+2,P[0].x+2,P[0].y+2);
 
@@ -118,6 +132,46 @@ public class Panel extends JPanel {
 
     public void reset() {
         points = new ArrayList();
+        repaint();
+    }
+
+    public void Mul(double[][] przeksztalcenie){
+
+        double [][] result = aktualnaMacierz;
+
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                for(int k=0;k<3;k++) {
+                    result[i][j] += aktualnaMacierz[k][j] * przeksztalcenie[i][k];
+                }
+            }
+        }
+        aktualnaMacierz = result;
+    }
+
+    public void przeksztalc() {
+
+        for(int i=0;i<points.size;i++) {
+
+            Point p = points.get(i);
+
+            double x, y,temp;
+
+            x = p.x * aktualnaMacierz[0][0] + p.y * aktualnaMacierz[1][0] + aktualnaMacierz[2][0];
+
+            y = p.x * aktualnaMacierz[0][1] + p.y * aktualnaMacierz[1][1] + aktualnaMacierz[2][1];
+
+            temp = p.x * aktualnaMacierz[0][2] + p.y * aktualnaMacierz[1][2] + aktualnaMacierz[2][2];
+
+            x /= temp;
+            y /=temp;
+
+            System.out.println(p);
+            System.out.println(x+ "  "+y);
+
+            punktyPoPrzekształceniu.set(new Point((int)Math.round(x),(int)Math.round(y)),i);
+        }
+
         repaint();
     }
 }

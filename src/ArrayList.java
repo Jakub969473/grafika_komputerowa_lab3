@@ -56,5 +56,16 @@ public class ArrayList{
         return node.value;
     }
 
+    public void set(Point z,int x) {
+
+        Node node = this.node;
+
+        for(int i=0;i<x;i++){
+            node = node.next;
+        }
+
+        node.value = z;
+    }
+
 
 }
