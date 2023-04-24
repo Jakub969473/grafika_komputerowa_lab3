@@ -9,18 +9,22 @@ public class MojeOkno extends JFrame implements ActionListener {
 
     MenuOkna menu = new MenuOkna();
 
-    Panel panel = new Panel();
+    Panel lewy = new Panel();
 
     Punkty punkty = new Punkty();
+
+    Przeksztalcenia prawy = new Przeksztalcenia();
 
     public MojeOkno(){
         super("Grafia komputerowa");
 
         setLayout(new FlowLayout(FlowLayout.CENTER, 2, 2));
 
-        add(panel);
+        add(lewy);
 
         add(punkty);
+
+        add(prawy);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -44,7 +48,7 @@ public class MojeOkno extends JFrame implements ActionListener {
         MouseAdapter mouse = new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                ArrayList x = panel.points;
+                ArrayList x = lewy.points;
                 Point [] p = new Point[x.size];
 
                 for(int i=0;i<p.length;i++){
@@ -57,7 +61,7 @@ public class MojeOkno extends JFrame implements ActionListener {
             }
         };
 
-        panel.addMouseListener(mouse);
+        lewy.addMouseListener(mouse);
 
 
     }
@@ -67,14 +71,14 @@ public class MojeOkno extends JFrame implements ActionListener {
         String label = e.getActionCommand();
 
         if(label.equals("Punkty")){
-            panel.linia = 0;
-            panel.repaint();
+            lewy.linia = 0;
+            lewy.repaint();
         }else if(label.equals("Lamana")){
-            panel.linia = 1;;
-            panel.repaint();
+            lewy.linia = 1;;
+            lewy.repaint();
         }else if(label.equals("Bezir")){
-            panel.linia = 2;
-            panel.repaint();
+            lewy.linia = 2;
+            lewy.repaint();
         }else if(label.equals("Reset")){
             //panel.reset();
 
@@ -99,8 +103,8 @@ public class MojeOkno extends JFrame implements ActionListener {
                 System.out.println();
             }
 
-            panel.Mul(x);
-            panel.przeksztalc();
+            lewy.Mul(x);
+            lewy.przeksztalc();
         }
 
     }

@@ -8,8 +8,10 @@ public class Punkty extends JPanel {
     List list = new List();
 
     public Punkty(){
-        setPreferredSize(new Dimension(500,500));
-        setMaximumSize(new Dimension(500,500));
+        setPreferredSize(new Dimension(100,500));
+        setMaximumSize(new Dimension(100,500));
+
+        setLayout(new GridLayout(1,2));
 
         list.setPreferredSize(new Dimension(100,100));
 
