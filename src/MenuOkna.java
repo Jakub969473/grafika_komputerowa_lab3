@@ -7,7 +7,9 @@ public class MenuOkna extends JMenuBar {
     JMenuItem punkty = new JMenuItem("Punkty");
     JMenuItem łamana = new JMenuItem("Lamana");
     JMenuItem bezir = new JMenuItem("Bezir");
-    JMenuItem reset = new JMenuItem("Reset");
+    JMenuItem resetPunkty = new JMenuItem("Reset Punktów");
+
+    JMenuItem resetMacierz = new JMenuItem("Reset Macierzy");
 
     public MenuOkna(){
 
@@ -17,7 +19,9 @@ public class MenuOkna extends JMenuBar {
 
         opcje.add(bezir);
 
-        opcje.add(reset);
+        opcje.add(resetPunkty);
+
+        opcje.add(resetMacierz);
 
         add(opcje);
     }

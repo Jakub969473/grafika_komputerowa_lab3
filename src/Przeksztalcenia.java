@@ -12,8 +12,8 @@ public class Przeksztalcenia extends JPanel {
     JTextField przesunText = new JTextField();
     JTextField skalaText = new JTextField();
     JTextField obrotText = new JTextField();
-    JLabel macierzWyswietl = new JLabel();
-
+    JPanel macierzWyswietl = new JPanel(new GridLayout(3,3,1,1));
+    private JLabel[][] grid = new JLabel[3][3];
     double[][] matrix = new double[3][3];
 
 
@@ -31,6 +31,8 @@ public class Przeksztalcenia extends JPanel {
         c.weightx = 0.5;
 
         c.insets =new Insets(10,10,10,10);
+
+        c.weighty = 6;
 
         c.gridx = 0;
         c.gridy = 0;
@@ -77,12 +79,33 @@ public class Przeksztalcenia extends JPanel {
 
         add(obrotText,c);
 
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                matrix[i][j] = 0;
+            }
+        }
+
+        matrix [0][0] = 1;
+        matrix [1][1] = 1;
+        matrix [2][2] = 1;
+
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                grid[i][j] = new JLabel(matrix[i][j]+"",SwingConstants.CENTER);
+               //grid[i][j].setFont(LABEL_FONT); // make it big
+                grid[i][j].setOpaque(true);
+                grid[i][j].setBackground(Color.WHITE);
+                macierzWyswietl.add(grid[i][j]);
+            }
+        }
+
         updateMatrix();
 
         c.gridx = 1;
         c.gridy = 4;
 
         add(macierzWyswietl,c);
+
     }
 
     private void setText(){
@@ -104,36 +127,29 @@ public class Przeksztalcenia extends JPanel {
         obrotText.setPreferredSize(new Dimension(100,50));
         obrotText.setMinimumSize(new Dimension(100,50));
         obrotText.setBackground(new Color(245,245,245));
-        obrotText.setText("0,0");
+        obrotText.setText("0");
 
-        macierzWyswietl.setPreferredSize(new Dimension(60,60));
-        macierzWyswietl.setMinimumSize(new Dimension(60,60));
+        macierzWyswietl.setPreferredSize(new Dimension(200,120));
+        macierzWyswietl.setMinimumSize(new Dimension(200,120));
         macierzWyswietl.setBackground(new Color(245,245,245));
 
     }
 
     public void updateMatrix(){
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
-                matrix[i][j] = 0;
-            }
-        }
 
-        matrix [0][0] = 1;
-        matrix [1][1] = 1;
-        matrix [2][2] = 1;
 
-        String temp = "<html>";
 
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
-                temp += matrix[i][j]+" ";
+                if((int)matrix[i][j]!=matrix[i][j]){
+                    grid[i][j].setText(String.format("%.4f",matrix[i][j]));
+                }else{
+                    grid[i][j].setText(String.format("%.1f",matrix[i][j]));
+                }
             }
         }
 
-        temp += "</html>";
-
-        macierzWyswietl.setText(temp);
+        repaint();
 
     }
 }

@@ -7,9 +7,11 @@ public class Panel extends JPanel {
 
     public ArrayList points = new ArrayList();
 
-    private ArrayList punktyPoPrzekształceniu = points;
+    private ArrayList punktyPoPrzekształceniu = new ArrayList();
     int linia = 0;
-    double aktualnaMacierz[][] = new double[3][3];
+    double[][] aktualnaMacierz = new double[3][3];
+
+    int dok = 100;
 
     public Panel(){
 
@@ -21,6 +23,7 @@ public class Panel extends JPanel {
             @Override
             public void mousePressed(MouseEvent e){
                 points.add(new Point(e.getX(),e.getY()));
+                punktyPoPrzekształceniu.add(new Point(e.getX(),e.getY()));
                 repaint();
             }
         });
@@ -44,7 +47,9 @@ public class Panel extends JPanel {
         Graphics g2 = (Graphics2D) g;
         g2.setColor(Color.gray);
         for (int i=0;i<points.size;i++){
-            Point p=punktyPoPrzekształceniu.get(i);
+
+            Point p = punktyPoPrzekształceniu.get(i);
+
 
             g2.fillOval(p.x, p.y, 5, 5);
 
@@ -52,6 +57,7 @@ public class Panel extends JPanel {
                 Lamana(i, p, g);
             }
         }
+
 
         if(linia == 2 && punktyPoPrzekształceniu.size>0) {
             Bezir(g2);
@@ -70,8 +76,6 @@ public class Panel extends JPanel {
     public void Bezir(Graphics g){
         int n=points.size;
         int m;
-        int dok=100;
-
         double x1=0,y1=0,x2,y2,temp,t=1.0/dok;
 
         double [][] R= new double[points.size][2];
@@ -132,6 +136,7 @@ public class Panel extends JPanel {
 
     public void reset() {
         points = new ArrayList();
+        punktyPoPrzekształceniu = new ArrayList();
         repaint();
     }
 
@@ -151,6 +156,8 @@ public class Panel extends JPanel {
 
     public void przeksztalc() {
 
+        punktyPoPrzekształceniu = new ArrayList();
+
         for(int i=0;i<points.size;i++) {
 
             Point p = points.get(i);
@@ -169,7 +176,7 @@ public class Panel extends JPanel {
             System.out.println(p);
             System.out.println(x+ "  "+y);
 
-            punktyPoPrzekształceniu.set(new Point((int)Math.round(x),(int)Math.round(y)),i);
+            punktyPoPrzekształceniu.add(new Point((int)Math.round(x),(int)Math.round(y)));
         }
 
         repaint();
